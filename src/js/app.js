@@ -21,6 +21,8 @@ import "../style/index.css";
         city: null
     }
  */
+/*Once the webpage loads, the social media icons are not visible. If you have a social media account, please enter it in the corresponding input box. Then, when you hit tab or enter, the social media icon will appear. By clicking on that icon, it will take you to the account you entered.
+For the City and Country input boxes, once you select a city, the corresponding country will be displayed in the country dropdown, and vice versa. The "null" option will remain visible in the country and city dropdowns, allowing users to select it to see all the available country or city options.*/
 function render(variables = {}) {
   console.log("These are the current variables: ", variables);
 
