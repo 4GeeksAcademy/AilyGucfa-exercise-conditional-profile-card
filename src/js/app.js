@@ -23,27 +23,72 @@ import "../style/index.css";
     }
  */
 function render(variables = {}) {
-  console.log("These are the current variables: ", variables); //print on the console
-  // here we ask the logical questions to make decisions on how to build the html
-  // if includeCover==false then we reset the cover code without the <img> tag to make the cover transparent.
+  console.log("These are the current variables: ", variables);
+
   let cover = `<div class="cover"><img src="${variables.background}" /></div>`;
   if (variables.includeCover == false) cover = "<div class='cover'></div>";
 
-  // reset the website body with the new html output
+  let socialMediaIcons = ""; // Initialize an empty string for social media icons
+
+  if (variables.twitter !== null && variables.twitter !== "") {
+    const twitterURL = `https://twitter.com/${variables.twitter}`;
+    socialMediaIcons += `<li><a href="${twitterURL}"><i class="fab fa-twitter"></i></a></li>`;
+  }
+
+  if (variables.github !== null && variables.github !== "") {
+    const githubURL = `https://github.com/${variables.github}`;
+    socialMediaIcons += `<li><a href="${githubURL}"><i class="fab fa-github"></i></a></li>`;
+  }
+
+  if (variables.linkedin !== null && variables.linkedin !== "") {
+    const linkedinURL = `https://linkedin.com/${variables.linkedin}`;
+    socialMediaIcons += `<li><a href="${linkedinURL}"><i class="fab fa-linkedin"></i></a></li>`;
+  }
+
+  if (variables.instagram !== null && variables.instagram !== "") {
+    const instagramURL = `https://instagram.com/${variables.instagram}`;
+    socialMediaIcons += `<li><a href="${instagramURL}"><i class="fab fa-instagram"></i></a></li>`;
+  }
+
+  // Update country dropdown options based on the selected city
+  const countryDropdown = document.querySelector("#country");
+  const usaOption = countryDropdown.querySelector("option[value='USA']");
+  usaOption.style.display = variables.city === "Miami" ? "block" : "none";
+
+  const germanyOption = countryDropdown.querySelector(
+    "option[value='Germany']"
+  );
+  germanyOption.style.display = variables.city === "Munich" ? "block" : "none";
+  const venezuelaOption = countryDropdown.querySelector(
+    "option[value='Venezuela']"
+  );
+  venezuelaOption.style.display =
+    variables.city === "Caracas" ? "block" : "none";
+  const canadaOption = countryDropdown.querySelector("option[value='Canada']");
+  canadaOption.style.display = variables.city === "Toronto" ? "block" : "none";
+
   document.querySelector("#widget_content").innerHTML = `<div class="widget">
             ${cover}
-          <img src="${variables.avatarURL}" class="photo" />
-          <h1>Lucy Boilett</h1>
-          <h2>Web Developer</h2>
-          <h3>Miami, USA</h3>
-          <ul class="position-right">
-            <li><a href="https://twitter.com/4geeksacademy"><i class="fab fa-twitter"></i></a></li>
-            <li><a href="https://github.com/4geeksacademy"><i class="fab fa-github"></i></a></li>
-            <li><a href="https://linkedin.com/4geeksacademy"><i class="fab fa-linkedin"></i></a></li>
-            <li><a href="https://instagram.com/4geeksacademy"><i class="fab fa-instagram"></i></a></li>
-          </ul>
-        </div>
-    `;
+            <img src="${variables.avatarURL}" class="photo" />
+            <h1>${
+              variables.name == null || variables.name == ""
+                ? `first`
+                : variables.name
+            } ${
+    variables.lastname == null || variables.lastname == ""
+      ? `last`
+      : variables.lastname
+  }</h1>
+        
+            <h2>${variables.role == null ? "Role" : variables.role}</h2>
+            <h3>${variables.city == null ? "City" : variables.city} ${
+    variables.country == null ? "Country" : variables.country
+  }</h3>
+        
+            <ul class="${variables.socialMediaPosition}">
+              ${socialMediaIcons} <!-- Insert the dynamically generated social media icons -->
+            </ul>
+          </div>`;
 }
 
 /**
@@ -61,7 +106,7 @@ window.onload = function() {
     socialMediaPosition: "position-left",
     // social media usernames
     twitter: null,
-    github: "alesanchezr",
+    github: null,
     linkedin: null,
     instagram: null,
     name: null,
